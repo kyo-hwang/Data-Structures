@@ -116,7 +116,64 @@ int main()
 int identical(BTNode *tree1, BTNode *tree2)
 
 {
-   /* add your code here */
+    Stack *s1 = malloc(sizeof(Stack));
+    Stack *s2 = malloc(sizeof(Stack));
+
+    s1-> top = NULL;
+    s2-> top = NULL;
+    
+    if(tree1==NULL && tree2 == NULL){
+        return 1;
+    }
+    else if(tree1==NULL || tree2==NULL){
+        return 0;
+    }
+
+
+    if(tree1->item != tree2->item){
+        return 0;
+    }
+    
+    push(s1,tree1);
+    push(s2,tree2);
+
+    while(s1->top != NULL && s2->top != NULL){
+        BTNode* tree1Node = pop(s1);
+        BTNode* tree2Node = pop(s2);
+
+
+        BTNode* tree1Left = tree1Node->left;
+        BTNode* tree1Right = tree1Node->right;
+        BTNode* tree2Left = tree2Node->left;
+        BTNode* tree2Right = tree1Node->right;
+
+        if(tree1Left != NULL && tree2Left !=NULL){
+            if(tree1Left->item != tree2Left->item){
+                return 0;
+            }
+            push(s1,tree1Left);
+            push(s1,tree1Right);
+        }
+        else if((tree1Left == NULL && tree2Left !=NULL)||(tree1Left != NULL && tree2Left ==NULL)){
+            return 0;
+        }
+
+        if(tree1Right != NULL && tree2Right !=NULL){
+            if(tree1Right->item != tree2Right->item){
+                return 0;
+            }
+            push(s2,tree1Right);
+            push(s2,tree2Right);
+        }
+        else if((tree1Right == NULL && tree2Right !=NULL)||(tree1Right != NULL && tree2Right ==NULL)){
+            return 0;
+        }
+
+    }
+    if(s1->top == NULL && s2->top ==NULL){
+        return 1;
+    }
+    return 0;
 }
 
 /////////////////////////////////////////////////////////////////////////////////

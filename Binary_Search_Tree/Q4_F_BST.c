@@ -31,6 +31,7 @@ typedef struct _stack
 
 // You should not change the prototypes of these functions
 void postOrderIterativeS1(BSTNode *node);
+void postOrderIterativeS1Recursive(BSTNode *node);
 
 void insertBSTNode(BSTNode **node, int value);
 
@@ -71,7 +72,7 @@ int main()
 			break;
 		case 2:
 			printf("The resulting post-order traversal of the binary search tree is: ");
-			postOrderIterativeS1(root); // You need to code this function
+			postOrderIterativeS1Recursive(root); // You need to code this function
 			printf("\n");
 			break;
 		case 0:
@@ -88,10 +89,40 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
+void postOrderIterativeS1Recursive(BSTNode *root){
+	if (root==NULL){
+		return;
+	}
+	postOrderIterativeS1Recursive(root->left);
+	postOrderIterativeS1Recursive(root->right);
+	printf("%d ",root->item);
+}
 
 void postOrderIterativeS1(BSTNode *root)
 {
-	 /* add your code here */
+	Stack *s = (Stack *)malloc(sizeof(Stack));
+	s->top = NULL;
+
+	push(s,root);
+	while(s->top!=NULL){
+		BSTNode *node = pop(s);
+		if(node->left == NULL && node->right==NULL){
+			printf("%d ",node->item);
+		}
+		if(node->right!=NULL || node->right!=NULL){
+			BSTNode *nodeWait = (BSTNode*)malloc(sizeof(BSTNode));
+			nodeWait->item = node->item;
+			nodeWait -> left = NULL;
+			nodeWait -> right = NULL; 
+			push(s,nodeWait);
+		}
+		if(node->right !=NULL){
+			push(s,node->right);
+		}
+		if(node->left != NULL){
+			push(s,node->left);
+		}
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -104,6 +104,34 @@ int main()
 ////////////////////////////////////////////////////////////
 int balanced(char *expression)
 {
+	Stack s;
+	s.ll.head = NULL;
+	s.ll.size = 0;
+
+	for(int i=0;i<256;i++){
+		if (expression[i] == '[' || expression[i] == '(' || expression[i] == '{'){
+			push(&s,expression[i]);
+		}
+		else if(expression[i] == ']' || expression[i] == ')' || expression[i] == '}'){
+			char a = pop(&s);
+			if(expression[i] == ']'){
+				if(a != '['){
+					return 1;
+				}
+			}
+			else if(expression[i] == ')'){
+				if(a != '('){
+					return 1;
+				}
+			}
+			else if(expression[i] == '}'){
+				if(a != '{'){
+					return 1;
+				}
+			}
+		}
+	}
+	return 0;
 /* add your code here */
 }
 

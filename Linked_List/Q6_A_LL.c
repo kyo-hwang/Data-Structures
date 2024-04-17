@@ -8,6 +8,7 @@ Purpose: Implementing the required functions for Question 6 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -88,7 +89,34 @@ int main()
 
 int moveMaxToFront(ListNode **ptrHead)
 {
+
     /* add your code here */
+	ListNode *pre = *ptrHead;
+	if (pre ==NULL){
+		return -1;
+	}
+	ListNode *cur = pre->next;
+	if(cur == NULL){
+		return -1;
+	}
+	ListNode *maxCur = cur;
+	ListNode *maxPre = pre;
+
+	int maxIndex = 0;
+
+	while(cur!=NULL){
+		if (cur->item > maxCur -> item){
+			maxCur = cur;
+			maxPre = pre;
+		}
+		pre = cur;
+		cur = cur->next;
+	}
+	maxPre -> next = maxCur->next;
+	maxCur -> next = *ptrHead;
+
+	*ptrHead = maxCur;
+	return maxCur -> item;
 }
 
 //////////////////////////////////////////////////////////////////////////////////

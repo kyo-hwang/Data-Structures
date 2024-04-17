@@ -102,6 +102,18 @@ int main()
 
 int smallestValue(BTNode *node)
 {
+    if(node==NULL){
+        return 2000000000;
+    }
+    int smallestVal = smallestValue(node->left);
+    int rightSmallVal = smallestValue(node->right);
+    if(smallestVal > rightSmallVal){
+        smallestVal = rightSmallVal;
+    }
+    if(smallestVal > node -> item){
+        smallestVal = node->item;
+    }
+    return smallestVal;
 	/* add your code here */
 }
 
